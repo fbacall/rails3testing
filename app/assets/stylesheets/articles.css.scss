@@ -1,0 +1,24 @@
+// Place all the styles related to the articles controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+div.article {
+  padding: 5px;
+  border-bottom: 1px dotted #ccc;
+
+  div.header {
+    font-size: 140%;
+    font-weight: bold;
+    color: #444;
+  }
+
+  div.body {
+    padding: 5px;
+  }
+
+  div.footer {
+    font-size: 90%;
+    color: #777;
+  }
+}

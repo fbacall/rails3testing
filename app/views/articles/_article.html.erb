@@ -1,0 +1,23 @@
+<% summary ||= false %>
+<div class="article">
+  <div class="header">
+    <%= summary ? link_to(article.title, article_path(article)) : article.title %>
+  </div>
+  <div class="body">
+    <% if summary %>
+      <%= truncate(article.body, :length => 100, :omission => '...' ) %>
+      <br/>
+      <%= link_to "(read more)", article_path(article) %>
+    <% else %>
+      <%= article.body.gsub("\n","<br/>").html_safe %>
+    <% end %>
+  </div>
+  <div class="footer">
+    Posted by <%= link_to article.author.name, user_path(article.author) %>
+    on <%= article.created_at.to_formatted_s(:long_ordinal) %>.
+  </div>
+  <% if article.author == current_user %>
+    <%= link_to 'Edit', edit_article_path(article) %> |
+    <%= link_to 'Destroy', article, confirm: 'Are you sure?', method: :delete %>
+  <% end %>
+</div>

@@ -1,0 +1,22 @@
+<table>
+  <tr>
+    <th>Who?</th>
+    <th>Privilege</th>
+  </tr>
+  <% policy.permissions(:include => :for).each do |permission| %>
+    <tr>
+      <td>
+        <% if permission.for.respond_to?(:title) %>
+          <%= permission.for_type %>:
+          <%= permission.for.title %>
+        <% elsif permission.for.respond_to?(:name) %>
+          <%= permission.for_type %>:
+          <%= permission.for.name %>
+        <% elsif permission.for_type == 'Public'%>
+          Public
+        <% end %>
+      </td>
+      <td><%= Authorization.level_privilege(permission.privilege).to_s.capitalize %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,35 @@
+<%= form_for(@workflow) do |f| %>
+  <% if @workflow.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@workflow.errors.count, "error") %> prohibited this workflow from being saved:</h2>
+
+      <ul>
+      <% @workflow.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :cols => 80 %>
+  </div>
+  <%= f.fields_for(:content_blob, @workflow.content_blob) do |c| %>
+    <div class="field">
+      <%= c.label :file %><br />
+      <%= c.file_field :file %>
+    </div>
+  <% end %>
+  <h2>Policy</h2>
+  <%= f.fields_for(:policy, @workflow.policy) do |p| %>
+    <%= render 'policies/form', :policy => @workflow.policy, :form => p %>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

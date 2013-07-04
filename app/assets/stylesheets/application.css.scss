@@ -1,0 +1,154 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *= require_self
+ *= require_tree .
+*/
+@import "mixins/gradients.css.sass";
+
+$site_width: 1000px;
+
+$main_blue: #5b72ff;
+$lighter_blue: lighten($main_blue, 25%);
+
+body {
+  margin: 0;
+  background-color: #e5e5e5;
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: #691428;
+  &:hover {
+    color: #c4614b;
+  }
+}
+
+body > div.header {
+  @include gradient(#c4614b, #691428);
+  width: $site_width;
+  margin: 1em auto 0 auto;
+  padding: 1em;
+  border: 1px solid #555;
+  color: #fff;
+  text-shadow: 2px 2px #000000;
+}
+
+body > div.content {
+  width: $site_width;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 0em 1em 2em 1em;
+  border: 1px solid #999;
+  border-width: 0 1px 1px 1px;
+  overflow: auto;
+}
+
+div.navigation {
+  float: left;
+  width: 150px;
+}
+
+div.main {
+  float: right;
+  width: $site_width - 160;
+  margin-left: 10px;
+}
+
+body > div.footer {
+  width: $site_width;
+  margin: 0 auto;
+  padding: 1em;
+  font-size: 120%;
+  text-align: center;
+}
+
+div.status {
+  text-align: right;
+  font-size: 80%;
+  clear: both;
+  margin-top: 5px;
+}
+
+form div.actions {
+  margin-top: 0.5em;
+}
+
+table {
+  border-collapse: collapse;
+  tr {
+    th, td {
+      border: 1px solid #333;
+      padding: 5px 10px;
+    }
+    th {
+      @include gradient(#ddd, #bbb);
+    }
+  }
+}
+
+div.flash {
+  overflow: auto;
+  width: 90%;
+  margin: 5px 0;
+  padding: 5px;
+  p {
+    margin: 0 0 0 20px;
+    padding: 0;
+  }
+  a {
+    text-decoration: none;
+    padding: 0 3px;
+    background-color: transparent;
+    &:hover {
+      font-weight: bold;
+    }
+  }
+}
+
+div.flash#error {
+  background-color: #F0A8A8;
+  color: #900;
+  a {
+    color: #900;
+  }
+}
+
+div.flash#notice {
+  background-color: #A4E7A0;
+  color: #26722D;
+  a {
+    color: #26722D;
+  }
+}
+
+ul.pagination {
+  list-style: none;
+  margin: 5px auto;
+  text-align: center;
+  padding: 0;
+  li {
+    display: inline;
+    margin: 0 2px;
+  }
+}
+
+div.fields {
+  margin-bottom: 0.5em;
+}
+
+div.description {
+  margin: 0.5em 0;
+  border: 1px solid #ccc;
+  padding: 0.5em;
+}
+

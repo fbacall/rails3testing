@@ -1,0 +1,39 @@
+<div style="overflow: auto">
+  <div id="tree" style="float: left; margin-right: 2em;"></div>
+
+  <script type="text/javascript">
+    var tree = new YAHOO.widget.TreeView("tree",
+        <%= {:label => "Research Object", :something => "secret", :expanded => true, :children => [
+                {:label => "Input Data", :children => ["test_data.xml","real_data.xml"]},
+                {:label => "Workflow", :something=>"yes"},
+                {:label => "Documentation", :something => "no"}
+            ]}.to_json.html_safe -%>
+    );
+
+
+    tree.subscribe("labelClick", function(node) {
+      if(node.data.something != null)
+        alert(node.data.something + " label was clicked");
+    });
+
+    tree.render();
+
+  </script>
+
+  <div id="demo" class="yui-navset" style="float: left; width: 500px;">
+      <ul class="yui-nav">
+          <li class="selected"><a href="#tab1"><em>Content</em></a></li>
+          <li><a href="#tab2"><em>Annotations</em></a></li>
+          <li><a href="#tab3"><em>Internal Comments</em></a></li>
+      </ul>
+      <div class="yui-content">
+          <div><p>Tab One Content</p></div>
+          <div><p>Tab Two Content</p></div>
+          <div><p>Tab Three Content</p></div>
+      </div>
+  </div>
+
+  <script type="text/javascript">
+    var tabView = new YAHOO.widget.TabView('demo');
+  </script>
+</div>

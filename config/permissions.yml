@@ -1,0 +1,9 @@
+articles:
+  create:
+    - Administrator
+  update:
+    - Administrator
+  new:
+    - Administrator
+  destroy:
+    - Administrator

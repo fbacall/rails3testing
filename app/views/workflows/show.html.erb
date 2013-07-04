@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @workflow.title %></h1>
+
+<div class="description">
+  <%= @workflow.description %>
+</div>
+
+Size: <%= number_to_human_size @workflow.content_blob.data.size %><br/>
+Uploader: <%= @workflow.author.name %>
+
+
+<h2>Policy</h2>
+<%= render 'policies/privilege_table', :policy => @workflow.policy %>
+
+<%= link_to 'Edit', edit_workflow_path(@workflow) %> |
+<%= link_to 'Back', workflows_path %>

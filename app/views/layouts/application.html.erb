@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rails3test</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application", "yahoo-dom-event", "treeview" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="yui-skin-sam">
+
+<div class="header">
+  <%= render "main/header" %>
+</div>
+
+<div class="content">
+
+  <div class="status">
+    <%= render "main/status" %>
+  </div>
+
+  <div class="navigation">
+    <%= render "main/navigation" %>
+  </div>
+
+  <div class="main">
+    <%- flash.each do |key, msg| -%>
+      <div class="flash" id="<%= key %>">
+        <p style="float:right;"><%= link_to 'X', "#" %></p>
+        <p><%= msg %></p>
+      </div>
+    <%- end -%>
+
+    <%= yield %>
+  </div>
+
+</div>
+
+<div class="footer">
+  <%= render "main/footer" %>
+</div>
+
+</body>
+</html>
