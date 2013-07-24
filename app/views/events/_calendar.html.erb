@@ -1,7 +1,4 @@
 <script>
-  var monthNames = [ "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December" ];
-
   $(function() {
 
     function Calendar(el) {
@@ -24,12 +21,15 @@
         content += '</tr>';
         mv.append(content);
       }
-      this.element.find('#currentMonth').html(monthNames[this.date.getMonth()] + ' ' + this.date.getFullYear());
+      this.element.find('#currentMonth').html(Calendar.monthNames[this.date.getMonth()] + ' ' + this.date.getFullYear());
     };
 
     Calendar.prototype.increaseMonth = function (m) {
       this.date.setMonth(this.date.getMonth() + m);
     };
+
+    Calendar.monthNames = [ "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December" ];
 
     var cal = new Calendar($('#calendar'));
     cal.draw();
@@ -50,7 +50,6 @@
   #calendar {
     text-align: center;
     display: inline-block;
-    overflow: auto;
   }
 
   #calendar a {
@@ -71,7 +70,7 @@
     width: 59%;
   }
 
-  #lastMonth {
+  #nextMonth {
     float: left;
     width: 20%;
   }
@@ -81,26 +80,38 @@
     width: 20%;
   }
 
-  #calendar table {
-    margin-top: 0.5em;
+  #calendar div.header {
+    padding: 0.5em 0;
+    background-color: #eee;
   }
 
+  #calendar div.header:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
 
-
+  #calendar td {
+    padding: 0;
+    height: 1.5em;
+    width: 2em;
+  }
 </style>
 
 <div id="calendar">
-  <a id="lastMonth">Last</a>
-  <div id="currentMonth"></div>
-  <a id="nextMonth">Next</a>
+  <div class="header">
+    <a id="lastMonth">Last</a>
+    <div id="currentMonth"></div>
+    <a id="nextMonth">Next</a>
+  </div>
   <table>
     <thead>
       <tr>
         <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
       </tr>
     </thead>
-    <tbody id="monthView">
-
-    </tbody>
+    <tbody id="monthView"></tbody>
   </table>
 </div>
