@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130704082711) do
+ActiveRecord::Schema.define(:version => 20130723094212) do
 
   create_table "articles", :force => true do |t|
     t.string   "title"
@@ -21,10 +21,14 @@ ActiveRecord::Schema.define(:version => 20130704082711) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "content_blobs", :force => true do |t|
-    t.binary   "data"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "events", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "when"
+    t.integer  "creator_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "time_zone"
   end
 
   create_table "groups", :force => true do |t|
@@ -88,18 +92,25 @@ ActiveRecord::Schema.define(:version => 20130704082711) do
     t.string   "password_digest"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.string   "avatar_file_name"
+    t.string   "avatar_content_type"
+    t.integer  "avatar_file_size"
+    t.datetime "avatar_updated_at"
   end
 
   create_table "workflows", :force => true do |t|
     t.string   "title"
     t.text     "description"
     t.integer  "author_id"
-    t.integer  "content_blob_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
     t.integer  "policy_id"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
   end
 
 end

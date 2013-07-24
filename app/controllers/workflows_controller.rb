@@ -1,14 +1,15 @@
 class WorkflowsController < ApplicationController
 
+  before_filter :find_workflows, :only => :index
+  before_filter :paginate, :only => :index
+  before_filter :filter, :only => :index
   before_filter :find_workflow, :only => [:show, :edit, :update, :destroy]
   before_filter :check_logged_in, :except => [:show, :index]
-  before_filter :check_ownership, :only => [:edit, :update, :destroy]
+  #before_filter :authorization, :only => [:edit, :update, :destroy]
 
   # GET /workflows
   # GET /workflows.json
   def index
-    @workflows = Workflow.with_privilege(current_user, :view)
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @workflows }
@@ -28,9 +29,9 @@ class WorkflowsController < ApplicationController
   # GET /workflows/new.json
   def new
     @workflow = Workflow.new
-    @workflow.build_content_blob
     @workflow.build_policy
-    @workflow.policy.permissions.build(:for_type => 'Public')
+    @workflow.policy.permissions.build(:for_type => 'Public', :privilege => Authorization.privilege_level(:download))
+    @workflow.policy.permissions.build(:for => current_user, :privilege => Authorization.privilege_level(:manage))
 
     respond_to do |format|
       format.html # new.html.erb
@@ -86,14 +87,29 @@ class WorkflowsController < ApplicationController
 
   private
 
-  def check_ownership
-    unless current_user == @workflow.author
-      unauthorized('Only the workflow author may do that.')
-    end
-  end
-
   def find_workflow
     @workflow = Workflow.find(params[:id])
+
+    unauthorized unless @workflow.can?(current_user, action_name)
+  end
+
+  def find_workflows
+    @workflows = Workflow.with_privilege(current_user, :view).includes(:author)
+  end
+
+  def paginate
+    params[:page] ||= '1'
+    params[:per_page] ||= '10'
+
+    @current_page = params[:page].to_i
+    @per_page = params[:per_page].to_i
+    @last_page = (@workflows.count / @per_page).ceil
+
+    @workflows = @workflows.limit(@per_page).offset((@current_page-1) * @per_page)
+  end
+
+  def filter
+    @workflows = @workflows.where("workflows.title LIKE ?","%#{params[:filter]}%") unless params[:filter].blank?
   end
 
 end

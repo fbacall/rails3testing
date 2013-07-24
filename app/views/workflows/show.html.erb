@@ -6,12 +6,17 @@
   <%= @workflow.description %>
 </div>
 
-Size: <%= number_to_human_size @workflow.content_blob.data.size %><br/>
+Size: <%= @workflow.document.exists? ? number_to_human_size(@workflow.document.size) : '-' %><br/>
 Uploader: <%= @workflow.author.name %>
 
+<% if @workflow.can?(current_user, :edit) %>
+  <h2>Policy</h2>
+  <%= render 'policies/privilege_table', :policy => @workflow.policy %>
+<% end %>
 
-<h2>Policy</h2>
-<%= render 'policies/privilege_table', :policy => @workflow.policy %>
-
-<%= link_to 'Edit', edit_workflow_path(@workflow) %> |
-<%= link_to 'Back', workflows_path %>
+<div class="actions">
+  <% if @workflow.can?(current_user, :edit) %>
+    <%= link_to 'Edit', edit_workflow_path(@workflow) %> |
+  <% end %>
+  <%= link_to 'Back', workflows_path %>
+</div>

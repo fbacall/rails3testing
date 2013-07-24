@@ -1,11 +1,12 @@
 class Workflow < ActiveRecord::Base
-  attr_accessible :content_blob_attributes, :policy_attributes, :description, :title
+  attr_accessible :policy_attributes, :description, :title, :author, :document
 
   include Authorization
 
-  belongs_to :content_blob
   belongs_to :author, :class_name => 'User'
   belongs_to :policy
+  has_attached_file :document
 
-  accepts_nested_attributes_for :content_blob, :policy
+
+  accepts_nested_attributes_for :policy
 end

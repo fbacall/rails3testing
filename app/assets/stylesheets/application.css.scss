@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *= require_self
  *= require_tree .
+ *= require jquery-ui-1.10.3.custom.min.css
 */
 @import "mixins/gradients.css.sass";
 
@@ -27,14 +28,14 @@ body {
 
 a {
   text-decoration: none;
-  color: #691428;
+  color: #3e4e69;
   &:hover {
-    color: #c4614b;
+    color: #6276a0;
   }
 }
 
 body > div.header {
-  @include gradient(#c4614b, #691428);
+  @include gradient(#555, #333);
   width: $site_width;
   margin: 1em auto 0 auto;
   padding: 1em;
@@ -87,11 +88,11 @@ table {
   border-collapse: collapse;
   tr {
     th, td {
-      border: 1px solid #333;
+      border: 1px solid #999;
       padding: 5px 10px;
     }
     th {
-      @include gradient(#ddd, #bbb);
+      @include gradient(#eee, #ccc);
     }
   }
 }
@@ -131,18 +132,7 @@ div.flash#notice {
   }
 }
 
-ul.pagination {
-  list-style: none;
-  margin: 5px auto;
-  text-align: center;
-  padding: 0;
-  li {
-    display: inline;
-    margin: 0 2px;
-  }
-}
-
-div.fields {
+div.field {
   margin-bottom: 0.5em;
 }
 
@@ -152,3 +142,19 @@ div.description {
   padding: 0.5em;
 }
 
+div.pagination {
+  float: right;
+  padding: 0.5em 0;
+}
+
+ul.pagination {
+  display: inline;
+  list-style: none;
+  margin: 5px auto;
+  text-align: center;
+  padding: 0;
+  li {
+    display: inline;
+    margin: 0 2px;
+  }
+}

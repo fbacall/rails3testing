@@ -15,35 +15,4 @@
   <%= form.text_field :title %>
 </div>
 
-<div class="field">
-  <table>
-    <tr>
-      <th>Who?</th>
-      <th>Privilege</th>
-      <th>Delete</th>
-    </tr>
-    <%= form.fields_for(:permissions, policy.permissions.sort_by { |perm| perm.for_type == 'Public' ? 0 : 1 }) do |p| %>
-
-      <tr>
-        <td>
-          <% if p.object.for.respond_to?(:title) %>
-            <%= p.object.for_type %>:
-            <%= p.object.for.title %>
-          <% elsif p.object.for.respond_to?(:name) %>
-            <%= p.object.for_type %>:
-            <%= p.object.for.name %>
-          <% elsif p.object.for_type == 'Public'%>
-            Public
-          <% end %>
-        </td>
-        <td>
-          <%= p.select(:privilege, Authorization::PRIVILEGE_LEVELS) %>
-          <%= p.hidden_field(:for_type) %>
-          <%= p.hidden_field(:for_id) %>
-        </td>
-        <td><%= p.check_box :_destroy %></td>
-      </tr>
-
-    <% end %>
-  </table>
-</div>
+<%= render 'permissions_form', :form => form, :policy => policy %>

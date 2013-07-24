@@ -1,0 +1,106 @@
+<script>
+  var monthNames = [ "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December" ];
+
+  $(function() {
+
+    function Calendar(el) {
+      this.date = new Date();
+      this.element = el;
+    }
+
+    Calendar.prototype.draw = function () {
+      var mv = this.element.find('#monthView');
+      var monthOffset = ((new Date(this.date.getFullYear(), this.date.getMonth(), 1)).getDay() + 6) % 7;
+      var daysInMonth = new Date(this.date.getFullYear(), this.date.getMonth()+1, 0).getDate();
+
+      mv.html(''); // Clear
+      for(var rowNo = 0; rowNo < 6; rowNo++) {
+        var content = '<tr>';
+        for(var colNo = 0; colNo <= 6; colNo++) {
+          var day = (rowNo * 7) + colNo - monthOffset + 1;
+          content += '<td>' + ((day > 0 && day <= daysInMonth) ? day : '') + '</td>';
+        }
+        content += '</tr>';
+        mv.append(content);
+      }
+      this.element.find('#currentMonth').html(monthNames[this.date.getMonth()] + ' ' + this.date.getFullYear());
+    };
+
+    Calendar.prototype.increaseMonth = function (m) {
+      this.date.setMonth(this.date.getMonth() + m);
+    };
+
+    var cal = new Calendar($('#calendar'));
+    cal.draw();
+
+    $('#nextMonth').click(function () {
+      cal.increaseMonth(1);
+      cal.draw();
+    });
+
+    $('#lastMonth').click(function () {
+      cal.increaseMonth(-1);
+      cal.draw();
+    });
+  });
+</script>
+
+<style>
+  #calendar {
+    text-align: center;
+    display: inline-block;
+    overflow: auto;
+  }
+
+  #calendar a {
+    display: block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  #calendar a:hover {
+    cursor: pointer;
+  }
+
+  #currentMonth {
+    float: left;
+    width: 59%;
+  }
+
+  #lastMonth {
+    float: left;
+    width: 20%;
+  }
+
+  #lastMonth {
+    float: left;
+    width: 20%;
+  }
+
+  #calendar table {
+    margin-top: 0.5em;
+  }
+
+
+
+</style>
+
+<div id="calendar">
+  <a id="lastMonth">Last</a>
+  <div id="currentMonth"></div>
+  <a id="nextMonth">Next</a>
+  <table>
+    <thead>
+      <tr>
+        <th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th><th>S</th>
+      </tr>
+    </thead>
+    <tbody id="monthView">
+
+    </tbody>
+  </table>
+</div>

@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  def autocomplete
+
+  end
+
   def unauthorized(message = nil)
     @message = message
     respond_to do |format|
       format.html { render :template => "errors/unauthorized", :status => 401 }
-      format.xml do
-        headers["WWW-Authenticate"] = %(Basic realm="Web Password")
-        render :nothing => true, :status => 401
-      end
       format.all { render :nothing => true, :status => 401 }
     end
   end
@@ -16,7 +16,9 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    ActiveSupport::XmlMini.backend = 'LibXML'
+    Hash.from_xml('<a>b</a>')
+    @current_user ||= User.find(session[:user_id], :include => :groups) if session[:user_id]
   end
 
   def logged_in?

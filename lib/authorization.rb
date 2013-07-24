@@ -1,4 +1,4 @@
-# TODO: Find better, Rails 3 way of doing this
+# TODO: Find better, Rails 3 way of doing this (acts_as)
 
 module Authorization
 
@@ -37,13 +37,33 @@ module Authorization
 
   # Check if the given user has the given privilege.
   # Doesn't need to do additional queries if operating on a #with_privilege scope.
-  def can?(user, privilege)
+  def can?(user, action)
+    privilege = Authorization.privilege_for_action(action)
+
     perms = self.policy.permissions.select do |p|
-      user && (p.for == user ||  user.groups.include?(p.for)) ||
-          p.for_type == 'Public'
+      user && (p.for == user || user.groups.include?(p.for)) || p.for_type == 'Public'
     end
 
     perms.empty? ? false : perms.max_by(&:privilege).privilege >= Authorization.privilege_level(privilege)
+  end
+
+  private
+
+  def Authorization.privilege_for_action(action)
+    case action.to_sym
+      when :new, :create
+        :none
+      when :view, :show, :index
+        :view
+      when :download
+        :download
+      when :edit, :update
+        :edit
+      when :manage, :destroy
+        :manage
+      else
+        :none
+    end
   end
 
 end

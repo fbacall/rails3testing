@@ -5,4 +5,9 @@ class Permission < ActiveRecord::Base
 
   validates :for_type, :inclusion => ['User', 'Group', 'Public']
   validates :for_id, :presence => true, :unless => "for_type == 'Public'"
+
+  def public?
+    for_type == 'Public'
+  end
+
 end

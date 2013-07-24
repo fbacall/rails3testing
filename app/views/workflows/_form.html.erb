@@ -4,9 +4,9 @@
       <h2><%= pluralize(@workflow.errors.count, "error") %> prohibited this workflow from being saved:</h2>
 
       <ul>
-      <% @workflow.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
+        <% @workflow.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -17,17 +17,15 @@
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_area :description, :cols => 80 %>
+    <%= f.text_area :description, :cols => 80, :rows => 5 %>
   </div>
-  <%= f.fields_for(:content_blob, @workflow.content_blob) do |c| %>
-    <div class="field">
-      <%= c.label :file %><br />
-      <%= c.file_field :file %>
-    </div>
-  <% end %>
+  <div class="field">
+    <%= f.label 'File' %><br />
+    <%= f.file_field :document %>
+  </div>
   <h2>Policy</h2>
   <%= f.fields_for(:policy, @workflow.policy) do |p| %>
-    <%= render 'policies/form', :policy => @workflow.policy, :form => p %>
+    <%= render 'policies/permissions_form', :form => p, :policy => @workflow.policy %>
   <% end %>
   <div class="actions">
     <%= f.submit %>

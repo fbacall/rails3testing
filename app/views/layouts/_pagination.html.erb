@@ -1,0 +1,26 @@
+<%
+   page_distance = 3
+   start_index = current_page > page_distance ? current_page - page_distance : 1
+   end_index = (current_page + page_distance) <= last_page ? current_page + page_distance : last_page
+%>
+<div class="pagination">
+  Page:
+  <ul class="pagination">
+    <% if start_index > 1 %>
+      <li><%= link_to 'First', url_for(:page => 1, :per_page => per_page)%> ... </li>
+    <% end %>
+    <% (start_index..end_index).each do |page_number| %>
+      <li>
+        <% if current_page == page_number %>
+          [<%= page_number %>]
+        <% else %>
+          <%= link_to page_number, url_for(:page => page_number, :per_page => per_page)%>
+        <% end %>
+      </li>
+    <% end %>
+    <% if end_index < last_page %>
+      <li> ... <%= link_to 'Last', url_for(:page => last_page, :per_page => per_page)%></li>
+    <% end %>
+  </ul>
+</div>
+<div style="clear:both"></div>

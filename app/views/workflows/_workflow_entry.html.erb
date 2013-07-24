@@ -1,0 +1,15 @@
+<div class="workflow">
+  <strong><%= link_to workflow_entry.title, workflow_entry %></strong><br/>
+  <% unless workflow_entry.description.blank? %>
+    <div class="description">
+      <%= workflow_entry.description %>
+    </div>
+  <% end %>
+  Size: <%= workflow_entry.document.exists? ? number_to_human_size(workflow_entry.document.size) : '-' %><br/>
+  Uploaded by <%= link_to workflow_entry.author.name, workflow_entry.author %> <%= time_ago_in_words(workflow_entry.created_at) %> ago
+  <div class="actions">
+    <%= link_to 'Edit', edit_workflow_path(workflow_entry) if workflow_entry.can?(current_user, :edit) %>
+    <%= link_to 'Destroy', workflow_entry, confirm: 'Are you sure?', method: :delete if workflow_entry.can?(current_user, :manage) %>
+  </div>
+
+</div>

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  attr_accessible :email, :name, :username, :password, :password_confirmation
+  attr_accessible :email, :name, :username, :password, :password_confirmation, :avatar
 
   has_secure_password
   validates :password, :presence => { :on => :create }
@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
   has_many :articles
   has_many :memberships
   has_many :groups, :through => :memberships
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "64x64>" },
+                    :default_url => "/images/:style/missing.png"
 
   def can?(action, object)
     if (roles = Permissions.roles(object, action))

@@ -1,8 +1,8 @@
 Rails3test::Application.routes.draw do
 
-  resources :policies
   resources :workflows
   resources :articles
+  resources :events
 
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"
