@@ -1,13 +1,13 @@
 <div class="field">
-  <table>
+  <table id="permission_form">
     <tr>
       <th>Who?</th>
       <th>Privilege</th>
       <th>Delete</th>
     </tr>
-    <%= form.fields_for(:permissions, policy.permissions.sort_by { |perm| perm.for_type == 'Public' ? 0 : 1 }) do |p| %>
+    <%= form.fields_for(:permissions, policy.permissions.sort_by { |perm| perm.for_type == 'Public' ? 0 : 1 }, :wrapper => false) do |p| %>
 
-      <tr>
+      <tr class="fields">
         <td>
           <% if p.object.for.respond_to?(:title) %>
             <%= p.object.for_type %>:
@@ -24,9 +24,12 @@
           <%= p.hidden_field(:for_type) %>
           <%= p.hidden_field(:for_id) %>
         </td>
-        <td><%= p.check_box :_destroy %></td>
+        <td>
+          <%= p.link_to_remove "X" %></p>
+        </td>
       </tr>
 
     <% end %>
   </table>
+  <p><%= form.link_to_add "Add a Permission", :permissions, :data => { :target => "#permission_form" } %></p>
 </div>

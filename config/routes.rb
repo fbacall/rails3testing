@@ -1,8 +1,12 @@
 Rails3test::Application.routes.draw do
 
+  devise_for :users
+
   resources :workflows
   resources :articles
-  resources :events
+  resources :events, except: [:show]
+  get 'events/:date', to: 'events#index', constraints: {date: /\d{4}-\d{2}-\d{2}/}
+  get 'events/:id', to: 'events#show'
 
   get "logout" => "sessions#destroy", :as => "logout"
   get "login" => "sessions#new", :as => "login"

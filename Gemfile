@@ -45,3 +45,7 @@ gem 'thin'
 gem 'libxml-ruby'
 
 gem 'paperclip'
+
+gem 'nested_form'
+
+gem 'devise'

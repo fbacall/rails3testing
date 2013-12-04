@@ -2,7 +2,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+    @events = Event.where(:when => @date.to_time..(@date.to_time + 23.hours + 59.minutes + 59.seconds))
 
     respond_to do |format|
       format.html # index.html.erb
@@ -40,7 +41,6 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    p params[:event][:time]
     params[:event][:creator] = current_user
     @event = Event.new(params[:event])
 

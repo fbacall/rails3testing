@@ -13,13 +13,22 @@
 
       mv.html(''); // Clear
       for(var rowNo = 0; rowNo < 6; rowNo++) {
-        var content = '<tr>';
+        var tr = $('<tr/>');
         for(var colNo = 0; colNo <= 6; colNo++) {
           var day = (rowNo * 7) + colNo - monthOffset + 1;
-          content += '<td>' + ((day > 0 && day <= daysInMonth) ? day : '') + '</td>';
+          var td = $('<td/>');
+          if(day > 0 && day <= daysInMonth) {
+            var link = $('<a/>', {
+              href: '/events/'+ this.date.toISOString().slice(0,8) + Math.floor(day / 10) + (day % 10),
+              text: day
+            });
+            td.append(link);
+            if(day == this.date.getDate())
+              td.addClass('selected');
+          }
+          tr.append(td);
         }
-        content += '</tr>';
-        mv.append(content);
+        mv.append(tr);
       }
       this.element.find('#currentMonth').html(Calendar.monthNames[this.date.getMonth()] + ' ' + this.date.getFullYear());
     };
@@ -32,6 +41,7 @@
         "July", "August", "September", "October", "November", "December" ];
 
     var cal = new Calendar($('#calendar'));
+    cal.selected = new Date(<%= @date.strftime('%F').gsub('-',',') -%>);
     cal.draw();
 
     $('#nextMonth').click(function () {
@@ -97,6 +107,15 @@
     padding: 0;
     height: 1.5em;
     width: 2em;
+  }
+
+  #calendar td.selected {
+    background-color: #FF9944;
+    font-weight: bold;
+  }
+
+  #calendar td.hasEvents {
+    background-color: #99FF44;
   }
 </style>
 

@@ -18,6 +18,7 @@
 //= require tabview
 //= require_tree .
 //= require jquery-ui-1.10.3.custom.min.js
+//= require jquery_nested_form
 
 // Fade out alerts when the X link is clicked
 $(document).ready(function(){
