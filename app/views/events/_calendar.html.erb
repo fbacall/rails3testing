@@ -1,8 +1,12 @@
 <script>
   $(function() {
 
-    function Calendar(el) {
-      this.date = new Date();
+    function Calendar(el, startDate) {
+      if (startDate) {
+        this.date = new Date(startDate);
+      } else {
+        this.date = new Date();
+      }
       this.element = el;
     }
 
@@ -40,7 +44,7 @@
     Calendar.monthNames = [ "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December" ];
 
-    var cal = new Calendar($('#calendar'));
+    var cal = new Calendar($('#calendar'), new Date('<%= @date.strftime('%F') -%>'));
     cal.selected = new Date(<%= @date.strftime('%F').gsub('-',',') -%>);
     cal.draw();
 
