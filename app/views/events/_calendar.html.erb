@@ -1,12 +1,21 @@
 <script>
   $(function() {
 
-    function Calendar(el, startDate) {
+    function Calendar(el, selectedDate, startDate) {
+      if (selectedDate) {
+        this.selected = new Date(selectedDate);
+      else {
+        this.selected = new Date();
+      }
+
       if (startDate) {
         this.date = new Date(startDate);
+      } else if (startDate) {
+        this.date = new Date(selectedDate);
       } else {
         this.date = new Date();
       }
+
       this.element = el;
     }
 
@@ -27,7 +36,9 @@
               text: day
             });
             td.append(link);
-            if(day == this.date.getDate())
+            if(this.selected.getMonth() == this.date.getMonth() &&
+               this.selected.getFullYear() == this.date.getFullYear() &&
+               this.selected.getDate() == day)
               td.addClass('selected');
           }
           tr.append(td);
@@ -51,7 +62,6 @@
         "July", "August", "September", "October", "November", "December" ];
 
     cal = new Calendar($('#calendar'), new Date('<%= @date.strftime('%F') -%>'));
-    cal.selected = new Date(<%= @date.strftime('%F').gsub('-',',') -%>);
     cal.draw();
 
     $('#nextMonth').click(function () {
