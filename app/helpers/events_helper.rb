@@ -1,6 +1,8 @@
 module EventsHelper
 
-  def events_title(date, period = "day")
+  def events_title(date, period)
+    period ||= 'day'
+
     if period == 'day'
       if date == Date.today
         "Today's Events"
