@@ -10,7 +10,7 @@
 
       if (startDate) {
         this.date = new Date(startDate);
-      } else if (startDate) {
+      } else if (selectedDate) {
         this.date = new Date(selectedDate);
       } else {
         this.date = new Date();
@@ -45,7 +45,8 @@
         }
         mv.append(tr);
       }
-      this.element.find('#currentMonth').html(Calendar.monthNames[this.date.getMonth()] + ' ' + this.date.getFullYear());
+      this.element.find('#currentMonth').html(Calendar.monthNames[this.date.getMonth()]);
+      this.element.find('#currentYear').html(this.date.getFullYear());
     };
 
     Calendar.prototype.increaseMonth = function (m) {
@@ -105,17 +106,17 @@
     cursor: pointer;
   }
 
-  #currentMonth {
+  #currentMonth, #currentYear {
     float: left;
     width: 59%;
   }
 
-  #nextMonth {
+  #nextMonth, #nextYear {
     float: left;
     width: 20%;
   }
 
-  #lastMonth {
+  #lastMonth, #lastYear {
     float: left;
     width: 20%;
   }
@@ -151,9 +152,14 @@
 
 <div id="calendar">
   <div class="header">
-    <a id="lastMonth">Last</a>
+    <a id="lastYear">&lt;</a>
+    <div id="currentYear"></div>
+    <a id="nextYear">&gt;</a>
+  </div>
+  <div class="header">
+    <a id="lastMonth">&lt;</a>
     <div id="currentMonth"></div>
-    <a id="nextMonth">Next</a>
+    <a id="nextMonth">&gt;</a>
   </div>
   <table>
     <thead>

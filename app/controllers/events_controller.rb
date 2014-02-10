@@ -3,7 +3,12 @@ class EventsController < ApplicationController
   # GET /events.json
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
-    @events = Event.where(:when => @date.to_time..(@date.to_time + 23.hours + 59.minutes + 59.seconds))
+    if params[:period] == 'month'
+      @events = Event.where(:when => @date.beginning_of_month .. @date.end_of_month)
+    else
+      @events = Event.where(:when => @date.beginning_of_day .. @date.end_of_day)
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb
