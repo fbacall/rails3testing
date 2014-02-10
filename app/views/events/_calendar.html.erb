@@ -38,13 +38,19 @@
     };
 
     Calendar.prototype.increaseMonth = function (m) {
-      this.date.setMonth(this.date.getMonth() + m);
+      var sign = 1;
+      if(m < 0)
+        sign = -1;
+      var yearMod = Math.floor(Math.abs(m) / 12) * sign;
+      var monthMod = m % 12;
+      this.date.setMonth(this.date.getMonth() + monthMod);
+      this.date.setFullYear(this.date.getFullYear() + yearMod);
     };
 
     Calendar.monthNames = [ "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December" ];
 
-    var cal = new Calendar($('#calendar'), new Date('<%= @date.strftime('%F') -%>'));
+    cal = new Calendar($('#calendar'), new Date('<%= @date.strftime('%F') -%>'));
     cal.selected = new Date(<%= @date.strftime('%F').gsub('-',',') -%>);
     cal.draw();
 
@@ -55,6 +61,16 @@
 
     $('#lastMonth').click(function () {
       cal.increaseMonth(-1);
+      cal.draw();
+    });
+
+    $('#nextYear').click(function () {
+      cal.increaseMonth(12);
+      cal.draw();
+    });
+
+    $('#lastYear').click(function () {
+      cal.increaseMonth(-12);
       cal.draw();
     });
   });
